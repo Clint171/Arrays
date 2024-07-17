@@ -1,3 +1,5 @@
+import sys
+
 def generate_array(str1 : str , str2 : str):
     union = []
     for i in range(0 , len(str1)):
@@ -7,7 +9,6 @@ def generate_array(str1 : str , str2 : str):
                 row.append(1)
             else:
                 row.append(0)
-        print(*row)
         union.append(row)
             
     return union
@@ -18,21 +19,24 @@ def get_common_subsequences(str1: str , str2: str):
     for i in range(0 , len(str1)):
         for j in range(0 , len(str2)):
             if array[i][j] == 1:
-                sequence = []
+                sequence = ""
                 count = 0
-                sequence.append(str1[i])
+                sequence +=(str1[i])
                 for k in range(j + 1 , len(str2)):
                     count += 1
+                    if(i + count >= len(str1)):
+                        break
                     if(array[i+count][k] == 1):
-                        sequence.append(str1[i+count])
+                        sequence += (str1[i+count])
                     else:
                         break
-                if sequence not in subsequences:
+                if sequence not in subsequences and len(sequence) >1:
                     subsequences.append(sequence)
     return subsequences
   
 def main():
-    print("Subsequences: " , get_common_subsequences("racecar" , "palace"))
+    subsequences = get_common_subsequences(sys.argv[1] , sys.argv[2])
+    print(*subsequences)
 
 if(__name__ == "__main__"):
     main()
