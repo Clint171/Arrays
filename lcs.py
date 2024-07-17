@@ -32,11 +32,30 @@ def get_common_subsequences(str1: str , str2: str):
                         break
                 if sequence not in subsequences and len(sequence) >1:
                     subsequences.append(sequence)
-    return subsequences
+
+    longest = ""
+    for i in subsequences:
+        if(len(i) > len(longest)):
+            longest = i
+    return longest
   
+def getSubsequence(arguments : list):
+    lcs = ''
+    for i in range(0 , len(arguments)):
+        if i == 0 or i == 1:
+            lcs = get_common_subsequences(arguments[0] , arguments[1])
+        
+        else:
+            lcs = get_common_subsequences(lcs , arguments[i])
+    print(lcs)
+    return lcs
+
 def main():
-    subsequences = get_common_subsequences(sys.argv[1] , sys.argv[2])
-    print(*subsequences)
+    if len(sys.argv) > 1 :
+        getSubsequence(sys.argv[1:])
+    else:
+        strings = input("Enter the strings, separated by spaces\n")
+        getSubsequence(strings.split(" "))
 
 if(__name__ == "__main__"):
     main()
